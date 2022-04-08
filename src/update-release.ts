@@ -12,7 +12,13 @@ export const run = async (): Promise<void> => {
     const owner = process.env.RELEASE_OWNER ?? context.repo.owner
     const repo = process.env.RELEASE_REPO ?? context.repo.repo
     const tagName = process.env.TAG_NAME ?? context.ref
-    const tag = tagName.replace('refs/tags/', '')
+    const custom_tag = getInput('tag', {required: false})
+    let tag = 
+    if (custom_tag === '') {
+      tag = tagName.replace('refs/tags/', '')
+    } else {
+      tag = custom_tag
+    }
 
     let getReleaseResponse: Octokit.Response<Octokit.ReposGetReleaseResponse>
     if (process.env.RELEASE_ID) {

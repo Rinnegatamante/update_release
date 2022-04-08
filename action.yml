@@ -20,6 +20,9 @@ inputs:
   body_path:
     description: 'Path to file with new body text.'
     required: false
+  tag:
+    description: 'tad to edit, if not, take main one.'
+    required: false
 outputs:
   id:
     description: 'The ID of the Release'

@@ -30,7 +30,13 @@ const run = () => __awaiter(void 0, void 0, void 0, function* () {
         const owner = (_a = process.env.RELEASE_OWNER) !== null && _a !== void 0 ? _a : github_1.context.repo.owner;
         const repo = (_b = process.env.RELEASE_REPO) !== null && _b !== void 0 ? _b : github_1.context.repo.repo;
         const tagName = (_c = process.env.TAG_NAME) !== null && _c !== void 0 ? _c : github_1.context.ref;
-        const tag = tagName.replace('refs/tags/', '');
+        const custom_tag = (0, core_1.getInput)('tag', { required: false });
+        let tag;
+        if (custom_tag === '') {
+            tag = tagName.replace('refs/tags/', '');
+        } else {
+            tag = custom_tag;
+        }
         let getReleaseResponse;
         if (process.env.RELEASE_ID) {
             (0, core_1.info)(`Updating release with id : '${process.env.RELEASE_ID}'`);
